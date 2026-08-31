@@ -7,7 +7,7 @@ import {Event, GenericPaginatedResponse, Organizer} from "../../../types.ts";
 import {OrganizerDocumentHead} from "../../common/OrganizerDocumentHead";
 import {IconExternalLink, IconMail, IconMapPin, IconWorld} from '@tabler/icons-react';
 import {t} from "@lingui/macro";
-import {PoweredByFooter} from "../../common/PoweredByFooter";
+
 import {socialMediaConfig} from "../../../constants/socialMediaConfig";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
 import {formatAddress, getShortLocationDisplay} from "../../../utilites/addressUtilities.ts";
@@ -335,20 +335,26 @@ export const OrganizerHomepage = ({
                         <div className={classes.footerSection}>
                             <div className={classes.footerLinks}>
                                 <Anchor
-                                    href={getConfig('VITE_PRIVACY_URL', 'https://hi.events/privacy-policy?utm_source=app-organizer-footer')}
+                                    href={getConfig('VITE_TOS_URL', 'https://wednesdayriders.com/datenschutzerklaerung.html')}
                                     className={classes.footerLink}
                                 >
                                     {t`Privacy Policy`}
                                 </Anchor>
                                 <span className={classes.footerSeparator}>•</span>
                                 <Anchor
-                                    href={getConfig('VITE_TOS_URL', 'https://hi.events/terms-of-service?utm_source=app-organizer-footer')}
+                                    href={getConfig('VITE_LEGAL_URL', 'https://wednesdayriders.com/impressum.html')}
                                     className={classes.footerLink}
                                 >
-                                    {t`Terms of Service`}
+                                    {t`Legal Notice`}
+                                </Anchor>
+                                <span className={classes.footerSeparator}>•</span>
+                                <Anchor
+                                    href={getConfig('VITE_DISCLAIMER_URL', 'https://wednesdayriders.com/haftungsausschluss.html')}
+                                    className={classes.footerLink}
+                                >
+                                    {t`Disclaimer`}
                                 </Anchor>
                             </div>
-                            <PoweredByFooter className={classes.poweredByFooter}/>
                         </div>
                     </div>
 

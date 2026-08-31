@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Haftungsausschluss</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        ul {
+            margin-top: 10px;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <h1>HAFTUNGSAUSSCHLUSS</h1>
+
+        <h2>1. Teilnahmebedingungen</h2>
+        <p>Mit der Anmeldung zum Event erkenne ich an, dass die Teilnahme auf eigenes Risiko erfolgt.
+        Ich bestätige, dass ich körperlich und geistig in der Lage bin, an diesem Event teilzunehmen.</p>
+
+        <p>Ich verpflichte mich, die folgenden Mindestanforderungen an die Schutzausrüstung gemäß den aktuellen UCI-Downhill-Richtlinien zu erfüllen:</p>
+        <strong>Pflichtausrüstung:</strong>
+        <ul>
+            <li>Vollvisierhelm mit zertifizierter Sicherheitsnorm.</li>
+            <li>Rückenprotektor, der die Wirbelsäule vom Schulterblatt bis zum Steißbein abdeckt.</li>
+            <li>Knie-/Schienbeinschutz, entweder als Einteiler oder getrennt.</li>
+            <li>Vollfingerhandschuhe.</li>
+        </ul>
+
+        <strong>Empfohlene Zusatzausrüstung:</strong>
+        <ul>
+            <li>Schulterprotektoren mit harter Außenschale.</li>
+            <li>Ellbogen-/Unterarmschutz, entweder einzeln oder als Teil eines Schutzanzugs.</li>
+            <li>Nackenstütze (z. B. Leatt Brace), kompatibel mit dem Helm.</li>
+        </ul>
+
+        <p>Die Einhaltung dieser Ausrüstungsvorgaben ist Voraussetzung für die Teilnahme am Rennen. Teilnehmer ohne vollständige Schutzausrüstung können vom Rennen ausgeschlossen werden.</p>
+
+        <h2>2. Gesundheitserklärung</h2>
+        <p>Ich erkläre, dass ich keine gesundheitlichen Probleme habe, die meine Teilnahme am Rennen gefährden könnten.
+        Ich bin mir bewusst, dass Mountainbiken eine potenziell gefährliche Sportart ist und Verletzungen – einschließlich, aber nicht beschränkt auf Knochenbrüche, Prellungen, Zerrungen und andere körperliche Schäden – auftreten können.</p>
+
+        <h2>3. Haftungsausschluss</h2>
+        <p>Ich entbinde die Veranstalter, Sponsoren, Helfer und alle anderen an der Organisation und Durchführung des Rennens beteiligten Personen von jeglicher Haftung für Schäden, Verletzungen oder Todesfälle, die im Zusammenhang mit meiner Teilnahme entstehen könnten – unabhängig von der Ursache.</p>
+
+        <h2>4. Versicherung</h2>
+        <p>Ich bin für meinen eigenen Versicherungsschutz verantwortlich.
+        Die Veranstalter übernehmen keine Verantwortung für die Versicherung der Teilnehmer.</p>
+
+        <h2>5. Einwilligung zur Bildveröffentlichung</h2>
+        <p>Ich erkläre mich einverstanden, dass während des Events Fotos und Videos gemacht werden, auf denen ich möglicherweise zu sehen bin.
+        Diese dürfen für Öffentlichkeitsarbeit und Werbung zukünftiger Veranstaltungen verwendet werden – ohne Vergütung.</p>
+
+        <h2>6. Schlussbestimmungen</h2>
+        <p>Dieser Haftungsausschluss gilt für die gesamte Dauer des Events sowie für alle damit verbundenen Veranstaltungen.
+        Ich erkenne an, dass ich diesen Haftungsausschluss gelesen und verstanden habe und mit den Bedingungen einverstanden bin.</p>
+
+        <button onclick="downloadPDF()">Als PDF herunterladen</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('content');
+            html2pdf().set({
+                margin: 1,
+                filename: 'haftungsausschluss.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            }).from(element).save();
+        }
+    </script>
+</body>
+</html>
