@@ -81,7 +81,6 @@ export const OrganizerHomepage = ({
     };
 
     // Images
-    const organizerLogo = organizer.images?.find(img => img.type === 'ORGANIZER_LOGO');
     const organizerCover = organizer.images?.find(img => img.type === 'ORGANIZER_COVER');
 
     const events = eventsData?.data || [];
@@ -186,15 +185,6 @@ export const OrganizerHomepage = ({
                                 <div className={classes.organizerContent}>
                                     <div className={classes.organizerProfile}>
                                         <div className={classes.profileMain}>
-                                            {organizerLogo && (
-                                                <div className={classes.logoWrapper}>
-                                                    <img
-                                                        src={organizerLogo.url}
-                                                        alt="Logo"
-                                                        className={classes.logo}
-                                                    />
-                                                </div>
-                                            )}
                                             <div className={classes.organizerInfo}>
                                                 <div className={classes.nameSection}>
                                                     <h1>{organizer?.name}</h1>
