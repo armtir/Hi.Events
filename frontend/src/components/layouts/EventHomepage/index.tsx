@@ -620,14 +620,14 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
                                     href={getConfig('VITE_TOS_URL', 'https://wednesdayriders.com/datenschutzerklaerung.html')}
                                     className={classes.footerLink}
                                 >
-                                    {t`Privacy Policy`}
+                                    {t`Privacy`}
                                 </Anchor>
                                 <span className={classes.footerSeparator}>•</span>
                                 <Anchor
                                     href={getConfig('VITE_LEGAL_URL', 'https://wednesdayriders.com/impressum.html')}
                                     className={classes.footerLink}
                                 >
-                                    {t`Legal Notice`}
+                                    {t`Imprint`}
                                 </Anchor>
                                 <span className={classes.footerSeparator}>•</span>
                                 <Anchor
