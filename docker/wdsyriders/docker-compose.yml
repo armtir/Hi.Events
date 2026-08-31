@@ -1,0 +1,99 @@
+services:
+  hievents:
+    restart: unless-stopped
+    build:
+      context: ./../../
+      dockerfile: Dockerfile.all-in-one
+    container_name: wdsyriders2-hievents
+    ports:
+      - "127.0.0.1:8123:80"
+    networks:
+      - wdsyriders2-net
+    environment:
+      - VITE_FRONTEND_URL=${VITE_FRONTEND_URL}
+      - VITE_API_URL_CLIENT=${VITE_API_URL_CLIENT}
+      - VITE_API_URL_SERVER=${VITE_API_URL_SERVER}
+      - VITE_STRIPE_PUBLISHABLE_KEY=${VITE_STRIPE_PUBLISHABLE_KEY}
+      - VITE_APP_NAME=${VITE_APP_NAME}
+      - LOG_CHANNEL=${LOG_CHANNEL}
+      - QUEUE_CONNECTION=${QUEUE_CONNECTION}
+      - APP_KEY=${APP_KEY}
+      - APP_CDN_URL=${APP_CDN_URL}
+      - APP_FRONTEND_URL=${APP_FRONTEND_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - APP_DISABLE_REGISTRATION=${APP_DISABLE_REGISTRATION}
+      - APP_SAAS_MODE_ENABLED=${APP_SAAS_MODE_ENABLED}
+      - APP_SAAS_STRIPE_APPLICATION_FEE_PERCENT=${APP_SAAS_STRIPE_APPLICATION_FEE_PERCENT}
+      - APP_SAAS_STRIPE_APPLICATION_FEE_FIXED=${APP_SAAS_STRIPE_APPLICATION_FEE_FIXED}
+      - APP_EMAIL_LOGO_URL=${APP_EMAIL_LOGO_URL}
+      - APP_EMAIL_LOGO_LINK_URL=${APP_EMAIL_LOGO_LINK_URL}
+      - MAIL_MAILER=${MAIL_MAILER}
+      - MAIL_DRIVER=${MAIL_DRIVER}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME}
+      - FILESYSTEM_PUBLIC_DISK=${FILESYSTEM_PUBLIC_DISK}
+      - FILESYSTEM_PRIVATE_DISK=${FILESYSTEM_PRIVATE_DISK}
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/hi-events
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=
+      - REDIS_PORT=6379
+      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - WEBHOOK_QUEUE_NAME=webhook-queue
+    volumes:
+      - wdsyriders2-hievents-storage:/app/backend/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  redis:
+    restart: unless-stopped
+    image: redis:latest
+    container_name: wdsyriders2-redis
+    networks:
+      - wdsyriders2-net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - wdsyriders2-hievents-redisdata:/data
+
+  postgres:
+    restart: unless-stopped
+    image: postgres:17
+    container_name: wdsyriders2-postgres
+    networks:
+      - wdsyriders2-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_DB: hi-events
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - wdsyriders2-hievents-pgdata:/var/lib/postgresql/data
+
+networks:
+  wdsyriders2-net:
+    driver: bridge
+
+volumes:
+  wdsyriders2-hievents-pgdata:
+    driver: local
+  wdsyriders2-hievents-redisdata:
+    driver: local
+  wdsyriders2-hievents-storage:
+    driver: local
