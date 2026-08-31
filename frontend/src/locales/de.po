@@ -4210,7 +4210,7 @@ msgstr "Gäste"
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:559
 msgid "Have a promo code?"
-msgstr "Haben Sie einen Promo-Code?"
+msgstr "Promo-Code am Start?"
 
 #: src/components/routes/admin/Dashboard/index.tsx:74
 msgid "Hello {0}, manage your platform from here."
