@@ -5,6 +5,7 @@ import classes from './OrganizerHomepage.module.scss';
 import React, {useEffect, useState} from 'react';
 import {Event, GenericPaginatedResponse, Organizer} from "../../../types.ts";
 import {OrganizerDocumentHead} from "../../common/OrganizerDocumentHead";
+import {PoweredByFooter} from "../../common/PoweredByFooter";
 import {IconExternalLink, IconMail, IconMapPin, IconWorld} from '@tabler/icons-react';
 import {t} from "@lingui/macro";
 
@@ -345,6 +346,7 @@ export const OrganizerHomepage = ({
                                     {t`Disclaimer`}
                                 </Anchor>
                             </div>
+                            <PoweredByFooter />
                         </div>
                     </div>
 
