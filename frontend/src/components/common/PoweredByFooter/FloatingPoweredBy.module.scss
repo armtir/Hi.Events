@@ -1,32 +1,25 @@
 .poweredBy {
-    bottom: 10px;
-    left: 10px;
-    font-size: 0.9rem;
-    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 32px;
+    padding: 24px 20px;
+    border-top: 1px solid rgba(107, 114, 128, 0.24);
     text-align: center;
-    border-radius: 5px;
-    margin-top: 30px;
     display: flex;
     justify-content: center;
+    align-items: center;
     color: var(--checkout-text-secondary, #6B7280);
-
-    .logo {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-    }
+    background: rgba(107, 114, 128, 0.06);
 
     .poweredByText {
-        font-size: 0.9rem;
-    }
-
-    .copyRight {
-        font-size: 0.6rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
     }
 
     a {
-        text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
         color: var(--checkout-accent, var(--mantine-primary-color-filled));
     }
 }

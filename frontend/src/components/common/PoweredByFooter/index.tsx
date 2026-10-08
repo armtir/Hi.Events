@@ -2,7 +2,7 @@ import {t} from "@lingui/macro";
 import classes from "./FloatingPoweredBy.module.scss";
 import classNames from "classnames";
 import React, {useMemo} from "react";
-import {iHavePurchasedALicence, isHiEvents} from "../../../utilites/helpers.ts";
+import {isHiEvents} from "../../../utilites/helpers.ts";
 import {getConfig} from "../../../utilites/config.ts";
 
 /**
@@ -21,10 +21,6 @@ import {getConfig} from "../../../utilites/config.ts";
 export const PoweredByFooter = (
     props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 ) => {
-    if (iHavePurchasedALicence()) {
-        return <></>;
-    }
-
     const link = useMemo(() => {
         let host = getConfig("VITE_FRONTEND_URL") ?? "unknown";
         let medium = "app";
@@ -43,19 +39,7 @@ export const PoweredByFooter = (
         return url.toString();
     }, []);
 
-    const footerContent = isHiEvents() ? (
-        <>
-            {t`Planning an event?`}{" "}
-            <a
-                href={`${link}`}
-                target="_blank"
-                className={classes.ctaLink}
-                title={"Effortlessly manage events and sell tickets online with Hi.Events"}
-            >
-                {t`Try Hi.Events Free`}
-            </a>
-        </>
-    ) : (
+    const footerContent = (
         <>
             {t`Powered by`}{" "}
             <a
@@ -65,7 +49,6 @@ export const PoweredByFooter = (
             >
                 Hi.Events
             </a>{" "}
-            🚀
         </>
     );
 
