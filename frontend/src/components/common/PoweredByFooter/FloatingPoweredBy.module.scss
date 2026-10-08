@@ -3,14 +3,11 @@
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    border-top: 1px solid #d8e2dd;
-    border-radius: 0;
-    margin: 40px 0 0;
-    padding: 22px 16px;
+    margin: 24px 0 0;
+    padding: 12px 0 0;
     display: flex;
     justify-content: center;
-    background: #f3f7f5;
-    color: #263b34;
+    color: var(--secondary-text-color, var(--checkout-text-secondary, #6B7280));
     font-size: 1.125rem;
     line-height: 1.5;
 
@@ -32,7 +29,7 @@
     a {
         text-decoration: underline;
         font-weight: 600;
-        color: #14634e;
+        color: var(--primary-color, var(--checkout-accent, var(--mantine-primary-color-filled)));
         text-underline-offset: 3px;
     }
 }

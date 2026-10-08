@@ -6,6 +6,7 @@ import {EventDocumentHead} from "../../common/EventDocumentHead";
 import {eventCoverImage, eventHomepageUrl, imageUrl, organizerHomepageUrl} from "../../../utilites/urlHelper.ts";
 import {Event, OrganizerStatus} from "../../../types.ts";
 import {EventNotAvailable} from "./EventNotAvailable";
+import {PoweredByFooter} from "../../common/PoweredByFooter";
 import {
     IconArrowUpRight,
     IconCalendar,
@@ -637,6 +638,7 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
                                     {t`Disclaimer`}
                                 </Anchor>
                             </div>
+                            <PoweredByFooter />
                         </div>
                     </div>
 
