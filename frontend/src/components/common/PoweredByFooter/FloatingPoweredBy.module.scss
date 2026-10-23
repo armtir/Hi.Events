@@ -8,8 +8,9 @@
     background: rgba(107, 114, 128, 0.06);
     text-align: center;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     color: var(--secondary-text-color, var(--checkout-text-secondary, #6B7280));
     font-size: 1.125rem;
     line-height: 1.5;
@@ -17,6 +18,16 @@
     .poweredByText {
         font-size: 1.125rem;
         font-weight: 600;
+    }
+
+    .devLicence {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--mantine-color-orange-7);
+    }
+
+    .copyRight {
+        font-size: 0.6rem;
     }
 
     a {

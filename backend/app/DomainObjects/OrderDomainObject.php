@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\Enums\ProductType;
 use HiEvents\DomainObjects\Interfaces\IsFilterable;
 use HiEvents\DomainObjects\Interfaces\IsSortable;
 use HiEvents\DomainObjects\SortingAndFiltering\AllowedSorts;
+use HiEvents\DomainObjects\Status\AttendeeStatus;
 use HiEvents\DomainObjects\Status\OrderPaymentStatus;
 use HiEvents\DomainObjects\Status\OrderRefundStatus;
 use HiEvents\DomainObjects\Status\OrderStatus;
@@ -24,6 +25,8 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
 
     /** @var Collection<AttendeeDomainObject>|null */
     public ?Collection $attendees = null;
+
+    private ?Collection $seatClaims = null;
 
     public ?StripePaymentDomainObject $stripePayment = null;
 
@@ -49,7 +52,15 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
             self::PUBLIC_ID,
             self::CURRENCY,
             self::TOTAL_GROSS,
+            self::BOX_OFFICE_ID,
+            self::BOX_OFFICE_TENDER,
+            self::BOX_OFFICE_OPERATOR_NAME,
         ];
+    }
+
+    public function isBoxOfficeOrder(): bool
+    {
+        return $this->getBoxOfficeId() !== null || $this->getBoxOfficeTender() !== null;
     }
 
     public static function getAllowedSorts(): AllowedSorts
@@ -92,7 +103,7 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
 
     public function getFullName(): string
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return trim($this->getFirstName().' '.($this->getLastName() ?? ''));
     }
 
     public function getProductOrderItems(): Collection
@@ -142,6 +153,44 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
     public function getAttendees(): ?Collection
     {
         return $this->attendees;
+    }
+
+    public function setSeatClaims(?Collection $seatClaims): OrderDomainObject
+    {
+        $this->seatClaims = $seatClaims;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<SeatClaimDomainObject>|null
+     */
+    public function getSeatClaims(): ?Collection
+    {
+        return $this->seatClaims;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSeatLabels(): array
+    {
+        return ($this->getAttendees() ?? collect())
+            ->filter(fn (AttendeeDomainObject $attendee) => $attendee->getSeatLabel() !== null
+                && $attendee->getStatus() !== AttendeeStatus::CANCELLED->name)
+            ->map(fn (AttendeeDomainObject $attendee) => $attendee->getSeatLabel())
+            ->values()
+            ->all();
+    }
+
+    public function getSingleEventOccurrence(): ?EventOccurrenceDomainObject
+    {
+        $occurrences = ($this->getOrderItems() ?? collect())
+            ->map(fn (OrderItemDomainObject $item) => $item->getEventOccurrence())
+            ->filter()
+            ->unique(fn (EventOccurrenceDomainObject $occurrence) => $occurrence->getId());
+
+        return $occurrences->count() === 1 ? $occurrences->first() : null;
     }
 
     public function isPaymentRequired(): bool
@@ -292,8 +341,14 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
     {
         return ! $this->isFreeOrder()
             && $this->getStatus() !== OrderPaymentStatus::AWAITING_OFFLINE_PAYMENT->name
-            && in_array($this->getPaymentProvider(), [PaymentProviders::STRIPE->name, PaymentProviders::OFFLINE->name], true)
+            && ($this->getPaymentProvider() === PaymentProviders::STRIPE->name || $this->isPaidOutsidePlatform())
             && $this->getRefundStatus() !== OrderRefundStatus::REFUNDED->name;
+    }
+
+    public function isPaidOutsidePlatform(): bool
+    {
+        return $this->getPaymentProvider() === PaymentProviders::OFFLINE->name
+            || ($this->getPaymentProvider() === null && $this->getIsManuallyCreated());
     }
 
     public function getAddressDTO(): ?AddressDTO
