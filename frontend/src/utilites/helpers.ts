@@ -175,6 +175,10 @@ export const safeLocalStorageRemove = (key: string): void => {
  * obscure this notice without a licence. If you hear from us or them, it will start as a friendly
  * conversation, and you'll have 30 days to get a licence or restore the notice.
  */
+export const iHavePurchasedALicence = () => {
+    return getConfig('VITE_I_HAVE_PURCHASED_A_LICENCE');
+}
+
 export const isHiEvents = () => {
     return getConfig('VITE_FRONTEND_URL')?.includes('.hi.events');
 }
