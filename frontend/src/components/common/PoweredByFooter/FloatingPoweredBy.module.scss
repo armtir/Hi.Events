@@ -2,28 +2,21 @@
     position: relative;
     width: 100%;
     box-sizing: border-box;
+    margin: 32px 0 0;
+    padding: 24px 20px;
+    border-top: 1px solid rgba(107, 114, 128, 0.24);
+    background: rgba(107, 114, 128, 0.06);
     text-align: center;
-    margin: 24px 0 0;
-    padding: 12px 0 0;
     display: flex;
     justify-content: center;
+    align-items: center;
     color: var(--secondary-text-color, var(--checkout-text-secondary, #6B7280));
     font-size: 1.125rem;
     line-height: 1.5;
 
-    .logo {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-    }
-
     .poweredByText {
         font-size: 1.125rem;
         font-weight: 600;
-    }
-
-    .copyRight {
-        font-size: 0.6rem;
     }
 
     a {
